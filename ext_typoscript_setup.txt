@@ -1,0 +1,8 @@
+# we have to make this globally. Actually, I don't know other way :-(
+config.tx_extbase.persistence.classes {
+    Slub\XmlSitemap\Domain\Model\KitodoDocument {
+        mapping {
+            tableName = tx_dlf_documents
+        }
+    }
+}

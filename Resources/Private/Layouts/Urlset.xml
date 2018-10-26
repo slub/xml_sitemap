@@ -1,0 +1,5 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <f:render section="pageList" arguments="{pages: paginatedPages}" />
+</urlset>
+</html>

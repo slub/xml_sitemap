@@ -1,0 +1,24 @@
+{namespace xs=Slub\XmlSitemap\ViewHelpers}
+
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <f:render section="pageList" arguments="{pages: pages}" />
+</urlset>
+</html>
+
+<f:section name="pageList">
+  <f:alias map="{root: '{f:uri.page(pageUid:\'{rootPageId}\', absolute:\'1\') -> f:format.htmlentities()}'}">
+      <f:for each="{pages}" as="page">
+        <url>
+          <f:alias map="{loc: '{f:uri.page(pageUid:\'{page.uid}\', absolute:\'1\') -> f:format.htmlentities()}'}">
+              <f:if condition="{xs:stringContains(needle: '{root}', haystack: '{loc}')} == 1">
+                <f:then>
+                  <loc>{f:uri.page(pageUid:"{page.uid}", absolute:1) -> f:format.htmlentities()}</loc>
+                </f:then>
+              </f:if>
+            </f:alias>
+          <lastmod>{page.tstamp -> f:format.date(format:"Y-m-d")}</lastmod>
+        </url>
+      </f:for>
+  </f:alias>
+</f:section>

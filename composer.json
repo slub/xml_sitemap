@@ -1,0 +1,27 @@
+{
+  "name": "slub/xml-sitemap",
+  "type": "typo3-cms-extension",
+  "description": "TYPO3 XML Sitemap extension.",
+  "homepage": "https://github.com/slub/xml_sitemap",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "xml_sitemap"
+  ],
+  "authors": [
+    {
+      "name": "Alexander Bigga",
+      "email": "alexander.bigga@slub-dresden.de",
+      "role": "Developer"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "require": {
+    "typo3/cms-core": "~7.6.23|~8.7.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Slub\\XmlSitemap\\": "Classes/"
+    }
+  }
+}

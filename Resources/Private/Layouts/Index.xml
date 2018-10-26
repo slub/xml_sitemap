@@ -1,0 +1,5 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<sitemapindex  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <f:render section="sitemapList" arguments="{_all}" />
+</sitemapindex >
+</html>

@@ -1,0 +1,18 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+  <f:layout name="Index" />
+</html>
+
+<f:section name="sitemapList">
+  <f:for each="{sitemaps}" as="sitemap">
+        <f:for each="{sitemap.entries}" as="page">
+          <sitemap>
+            <loc>{f:uri.action(action:'{sitemap.name}', additionalParams:{type:"20180709", page:"{page}"}, absolute:1) -> f:format.htmlentities()}</loc>
+          </sitemap>
+        </f:for>
+  </f:for>
+  <f:for each="{customSitemaps}" as="sitemap">
+        <sitemap>
+          <loc>{sitemap -> f:format.htmlentities()}</loc>
+        </sitemap>
+  </f:for>
+</f:section>
