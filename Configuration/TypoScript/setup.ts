@@ -51,20 +51,9 @@ lib.tx_xmlsitemap {
             insertBelow = FALSE
         }
       }
-    }
-}
-
-plugin.tx_news {
-    settings {
-        link {
-          hrDate = 1
-          hrDate {
-            day = j
-            month = n
-            year = Y
-          }
-          skipControllerAndAction = 1
-        }
+      link {
+        hrDate < plugin.tx_news.settings.link.hrDate
+      }
     }
 }
 

@@ -10,11 +10,20 @@
     <f:if condition="{xs:compareDomains(url1: '{root}', url2: '{loc}')} == 1">
       <f:for each="{pages}" as="page">
         <url>
-          <loc>{f:uri.page(pageUid:"{settings.newsDetailPageView}", absolute:1, additionalParams:"{ 0 : {tx_news_pi1:{news:'{page.uid}',
-            day: '{page.datetime->f:format.date(format:\'d\')}',
-            month: '{page.datetime->f:format.date(format:\'m\')}',
-            year:'{page.datetime->f:format.date(format:\'Y\')}'
-            }}}") -> f:format.htmlentities()}</loc>
+          <f:debug>{settings.link}</f:debug>
+          <f:if condition="{settings.link.hrDate} == 1">
+            <f:then>
+              <loc>{f:uri.page(pageUid:"{settings.newsDetailPageView}", absolute:1, additionalParams:"{ 0 : {tx_news_pi1:{news:'{page.uid}',
+                day: '{page.datetime->f:format.date(format:\'d\')}',
+                month: '{page.datetime->f:format.date(format:\'m\')}',
+                year:'{page.datetime->f:format.date(format:\'Y\')}'
+                }}}") -> f:format.htmlentities()}</loc>
+            </f:then>
+            <f:else>
+              <loc>{f:uri.page(pageUid:"{settings.newsDetailPageView}", absolute:1, additionalParams:"{ 0 : {tx_news_pi1:{news:'{page.uid}'
+                }}}") -> f:format.htmlentities()}</loc>
+            </f:else>
+          </f:if>
           <lastmod>{page.tstamp -> f:format.date(format:"Y-m-d")}</lastmod>
         </url>
       </f:for>
