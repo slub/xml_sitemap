@@ -8,12 +8,8 @@ plugin.tx_xmlsitemap {
     # cat=plugin.tx_xmlsitemap/file; type=string; label=Path to template layouts (FE)
     layoutRootPath = EXT:xml_sitemap/Resources/Private/Layouts/
   }
-  persistence {
-    # cat=plugin.tx_xmlsitemap/200/a; type=int+; label=Default storage PID
-    storagePid =
-  }
-  # cat=plugin.tx_xmlsitemap/100/a; type=int+; label=Maximum Items per Sitemap
-  itemsPerPage = 5
+  # cat=plugin.tx_xmlsitemap/200/a; type=int+; label=Root PID of website
+  websiteRoot =
   # cat=plugin.tx_xmlsitemap/210/a; type=int+; label=Kitodo storage PID
   kitodoRecordStorage =
   # cat=plugin.tx_xmlsitemap/211/a; type=int+; label=Kitodo Page View
@@ -22,4 +18,6 @@ plugin.tx_xmlsitemap {
   newsRecordStorage =
   # cat=plugin.tx_xmlsitemap/213/a; type=int+; label=News detail Pageview
   newsDetailPageView =
+  # cat=plugin.tx_xmlsitemap/300/a; type=int+; label=Maximum Items per Sitemap
+  itemsPerPage = 20000
 }

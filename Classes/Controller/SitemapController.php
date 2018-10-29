@@ -129,8 +129,7 @@ class SitemapController extends ActionController
         }
 
         $this->currentPage = GeneralUtility::_GET('page');
-        $this->currentPid = $GLOBALS['TSFE']->id;
-#$this->request->setFormat('html');
+        $this->currentPid = $this->settings['websiteRoot'] ? $this->settings['websiteRoot'] : $GLOBALS['TSFE']->id;
     }
 
     /**

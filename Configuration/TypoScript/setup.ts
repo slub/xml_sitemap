@@ -8,10 +8,6 @@ plugin.tx_xmlsitemap {
     layoutRootPaths.1 = {$plugin.tx_xmlsitemap.view.layoutRootPath}
     widget.TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper.templateRootPath ={$plugin.tx_xmlsitemap.view.templateRootPath}
   }
-  persistence {
-    storagePid = {$plugin.tx_xmlsitemap.persistence.storagePid}
-    #recursive = 1
-  }
   features {
     skipDefaultArguments = 1
   }
@@ -19,6 +15,7 @@ plugin.tx_xmlsitemap {
     #callDefaultActionIfActionCantBeResolved = 1
   }
   settings {
+      websiteRoot = {$plugin.tx_xmlsitemap.websiteRoot}
       kitodoRecordStorage = {$plugin.tx_xmlsitemap.kitodoRecordStorage}
       kitodoPageView = {$plugin.tx_xmlsitemap.kitodoPageView}
       newsRecordStorage = {$plugin.tx_xmlsitemap.newsRecordStorage}
