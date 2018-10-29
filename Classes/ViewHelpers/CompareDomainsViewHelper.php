@@ -15,7 +15,7 @@
    * @package TYPO3
    * @subpackage tx_xml_sitemap
    */
-  class StringContainsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+  class CompareDomainsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
     /**
      * Return all comments
@@ -24,9 +24,11 @@
      * @param string $haystack
      * @return boolean
      */
-    public function render($needle, $haystack) {
+    public function render($url1, $url2) {
 
-      if (strpos($haystack, $needle) === 0) {
+      $url1_host = parse_url($url1, PHP_URL_HOST);
+      $url2_host = parse_url($url2, PHP_URL_HOST);
+      if ($url1_host == $url2_host) {
           return 1;
       } else {
           return 0;

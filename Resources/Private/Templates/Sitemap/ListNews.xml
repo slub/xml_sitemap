@@ -7,7 +7,7 @@
 
 <f:section name="pageList">
   <f:alias map="{loc: '{f:uri.page(pageUid:\'{settings.newsDetailPageView}\', absolute:\'1\')}', root: '{f:uri.page(pageUid:\'{rootPageId}\', absolute:\'1\') -> f:format.htmlentities()}'}">
-    <f:if condition="{xs:stringContains(needle: '{root}', haystack: '{loc}')} == 1">
+    <f:if condition="{xs:compareDomains(url1: '{root}', url2: '{loc}')} == 1">
       <f:for each="{pages}" as="page">
         <url>
           <loc>{f:uri.page(pageUid:"{settings.newsDetailPageView}", absolute:1, additionalParams:"{ 0 : {tx_news_pi1:{news:'{page.uid}',
