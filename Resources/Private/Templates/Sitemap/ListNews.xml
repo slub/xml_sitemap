@@ -10,7 +10,6 @@
     <f:if condition="{xs:compareDomains(url1: '{root}', url2: '{loc}')} == 1">
       <f:for each="{pages}" as="page">
         <url>
-          <f:debug>{settings.link}</f:debug>
           <f:if condition="{settings.link.hrDate} == 1">
             <f:then>
               <loc>{f:uri.page(pageUid:"{settings.newsDetailPageView}", absolute:1, additionalParams:"{ 0 : {tx_news_pi1:{news:'{page.uid}',
