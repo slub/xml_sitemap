@@ -10,12 +10,12 @@
     <f:if condition="{xs:compareDomains(url1: '{root}', url2: '{loc}')} == 1">
       <f:for each="{pages}" as="page">
         <url>
-          <f:if condition="{settings.link.hrDate} == 1">
+          <f:if condition="{settings.link.hrDate._typoScriptNodeValue} == 1">
             <f:then>
               <loc>{f:uri.page(pageUid:"{settings.newsDetailPageView}", absolute:1, additionalParams:"{ 0 : {tx_news_pi1:{news:'{page.uid}',
-                day: '{page.datetime->f:format.date(format:\'d\')}',
-                month: '{page.datetime->f:format.date(format:\'m\')}',
-                year:'{page.datetime->f:format.date(format:\'Y\')}'
+                day: '{page.datetime->f:format.date(format:\'{settings.link.hrDate.day}\')}',
+                month: '{page.datetime->f:format.date(format:\'{settings.link.hrDate.month}\')}',
+                year:'{page.datetime->f:format.date(format:\'{settings.link.hrDate.year}\')}'
                 }}}") -> f:format.htmlentities()}</loc>
             </f:then>
             <f:else>
