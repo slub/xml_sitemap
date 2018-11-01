@@ -228,9 +228,9 @@ class SitemapController extends ActionController
      */
     public function listKitodoAction()
     {
-        $kitodoDocuments = $this->kitodoDocumentRepository->findAll();
-        $pageSlice = array_slice($kitodoDocuments->toArray(), $this->currentPage * $this->settings['list']['paginate']['itemsPerPage'], $this->settings['list']['paginate']['itemsPerPage']);
-        $this->view->assign('pages', $pageSlice);
+        $recordNum = $this->kitodoDocumentRepository->countAll();
+        $kitodoDocuments = $this->kitodoDocumentRepository->findAllLimitOffset($this->settings['list']['paginate']['itemsPerPage'], $this->currentPage * $this->settings['list']['paginate']['itemsPerPage']);
+        $this->view->assign('pages', $kitodoDocuments);
         $this->view->assign('rootPageId', $this->currentPid);
     }
 

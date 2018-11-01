@@ -27,17 +27,23 @@ class KitodoDocumentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     );
 
     /**
-     * Find all records younger than the given timestamp
+     * Find all records in a given interval
      *
-     * @param int $timestamp
+     * @param int $limit
+     * @param int $offset
      * @return objects
      */
-    public function findYoungerThan($timestamp) {
+    public function findAllLimitOffset($limit, $offset) {
 
       $query = $this->createQuery();
       $constraints = [];
 
-      $constraints[] = $query->greaterThan('tstamp', $timestamp);
+      if ((int)$limit >= 1) {
+          $query->setLimit((int)$limit);
+      }
+      if (!empty($offset)) {
+          $query->setOffset((int)$offset);
+      }
 
       if (count($constraints)) {
           $query->matching($query->logicalAnd($constraints));
