@@ -15,12 +15,13 @@ namespace Slub\XmlSitemap\Controller;
  */
 
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use Slub\XmlSitemap\Domain\Repository\SitemapRepository;
 use Slub\XmlSitemap\Domain\Repository\KitodoDocumentRepository;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use \GeorgRinger\News\Domain\Repository\NewsRepository;
+use GeorgRinger\News\Domain\Repository\NewsRepository;
 
 /**
  * Class SitemapController
@@ -60,13 +61,6 @@ class SitemapController extends ActionController
     protected $newsRepository;
 
     /**
-     * @param NewsRepository $newsRepository
-     */
-    public function injectNewsRepository(NewsRepository $newsRepository) {
-        $this->newsRepository = $newsRepository;
-    }
-
-    /**
     * @var int $currentPage
     */
     protected $currentPage = NULL;
@@ -103,15 +97,20 @@ class SitemapController extends ActionController
      */
     public function initializeListNewsAction() {
 
-        // set storagePid to point extbase to the right repositories
-        $configurationArray = [
-            'persistence' => [
-                'storagePid' => $this->settings['newsRecordStorage'],
-            ],
-        ];
-        $configurationArray = $this->settings + $configurationArray;
-        $this->configurationManager->setConfiguration($configurationArray);
+      if (ExtensionManagementUtility::isLoaded('news')) {
+          // set storagePid to point extbase to the right repositories
+          $configurationArray = [
+              'persistence' => [
+                  'storagePid' => $this->settings['newsRecordStorage'],
+              ],
+          ];
+          $configurationArray = $this->settings + $configurationArray;
+          $this->configurationManager->setConfiguration($configurationArray);
 
+          // instantiate and fill the news repository
+          $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+          $this->newsRepository = $objectManager->get(NewsRepository::class);
+      }
     }
 
     /**
@@ -170,12 +169,14 @@ class SitemapController extends ActionController
             'entries' => $this->getPaginationArray($this->sitemapRepository->getSubPages($this->currentPid))
         );
 
-        // prepare news sitemap
-        $this->initializeListNewsAction();
-        $sitemaps[] = array(
-            'name' => 'listNews',
-            'entries' => $this->getPaginationArray($this->newsRepository->findAll())
-        );
+        if (ExtensionManagementUtility::isLoaded('news')) {
+            // prepare news sitemap
+            $this->initializeListNewsAction();
+            $sitemaps[] = array(
+                'name' => 'listNews',
+                'entries' => $this->getPaginationArray($this->newsRepository->findAll())
+            );
+        }
 
         // prepare kitodo sitemap
         $this->initializeListKitodoAction();
@@ -215,10 +216,14 @@ class SitemapController extends ActionController
      */
     public function listNewsAction()
     {
-        $news = $this->newsRepository->findAll();
-        $pageSlice = array_slice($news->toArray(), $this->currentPage * $this->settings['list']['paginate']['itemsPerPage'], $this->settings['list']['paginate']['itemsPerPage']);
-        $this->view->assign('pages', $pageSlice);
-        $this->view->assign('rootPageId', $this->currentPid);
+        if ($this->newsRepository instanceof NewsRepository) {
+            $news = $this->newsRepository->findAll();
+            $pageSlice = array_slice($news->toArray(), $this->currentPage * $this->settings['list']['paginate']['itemsPerPage'], $this->settings['list']['paginate']['itemsPerPage']);
+            $this->view->assign('pages', $pageSlice);
+            $this->view->assign('rootPageId', $this->currentPid);
+        } else {
+            throw new \Exception('NewsRepository not available. Check your installation.');
+        }
     }
 
     /**

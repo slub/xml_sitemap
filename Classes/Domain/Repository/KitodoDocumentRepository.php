@@ -35,21 +35,22 @@ class KitodoDocumentRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     public function findAllLimitOffset($limit, $offset) {
 
-      $query = $this->createQuery();
-      $constraints = [];
+        $query = $this->createQuery();
+        $constraints = [];
 
-      if ((int)$limit >= 1) {
-          $query->setLimit((int)$limit);
-      }
-      if (!empty($offset)) {
-          $query->setOffset((int)$offset);
-      }
+        if ((int)$limit >= 1) {
+            $query->setLimit((int)$limit);
+        }
+        if (!empty($offset)) {
+            $query->setOffset((int)$offset);
+        }
 
-      if (count($constraints)) {
-          $query->matching($query->logicalAnd($constraints));
-      }
+        if (count($constraints)) {
+            $query->matching($query->logicalAnd($constraints));
+        }
 
-      return $query->execute();
+        return $query->execute();
+
     }
 
 }
